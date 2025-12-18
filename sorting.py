@@ -32,6 +32,7 @@ def merge(arr1, arr2):
     n1 = len(arr1)
     n2 = len(arr2)
     new_arr = []
+
     while n1> 0 and n2 >0:
         print("arr1[0]", arr1[0])
         print("arr2[0]",arr2[0])
@@ -39,6 +40,9 @@ def merge(arr1, arr2):
         if arr1[0]<arr2[0]:
             arr1.pop(0)
         elif arr2[0]<arr1[0]:
+            arr2.pop(0)
+        else:
+            arr1.pop(0)
             arr2.pop(0)
         n1 = len(arr1)
         n2 = len(arr2)
@@ -70,5 +74,31 @@ def mergesort(arr):
     print("--------------")
     return merge(mergesort(first),mergesort(second))
 
-array = [9,6,2,5,3,8]
-print(mergesort(array))
+array = [9,9,999,6,2,5,3,2,8]
+#print(mergesort(array))
+
+
+# Quicksort
+'''
+take any element as "pivot", here taking first element
+
+
+'''
+
+def quicksort(arr):
+    n = len(arr)
+    if n ==0:
+        return []
+    elif n == 1:
+        return arr
+    pivot = arr[0]
+    arr.pop(0)
+    lesser = []
+    greater = []
+    for e in arr:
+        if e>pivot:
+            greater.append(e)
+        else:
+            lesser.append(e)
+    return quicksort(lesser)+[pivot]+quicksort(greater)
+print(quicksort(array))

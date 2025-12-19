@@ -36,7 +36,7 @@ def binary_search(elements, to_search):
         return binary_search(second_half, to_search)
     elif middle_element==to_search:
         return True
-print(binary_search(elements, to_search))
+#print(binary_search(elements, to_search))
 
 '''
 better, iterative binary search (im too dumb)
@@ -75,4 +75,4 @@ def iterative_bs(arr, x):
             return mid_index
     return -1
 
-print(iterative_bs(elements, to_search))
+print(iterative_bs([2, 8, 10, 6, 5, 1, 3, 7, 4], 1))

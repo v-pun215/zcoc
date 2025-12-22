@@ -1,4 +1,4 @@
-# Soldiers and Bananas
+# Soldier and Bananas
 
 inp = list(map(int, input().split()))
 k = inp[0]

@@ -28,8 +28,6 @@ values = []
 for i in range(N):
     values.append(list(map(int, input().split())))
 
-print(first_line)
-print(values)
 # Part 1, get time taken per entry 
 '''
 formula to get time taken for H and W
@@ -43,14 +41,16 @@ for value in values:
     W = value[-1]
     distinct_H_W.add(H)
     distinct_H_W.add(W)
-    time = abs(H-W) + 1
+    time = abs(H-W) + B
     time_taken.append(time)
 
-print(time_taken)
-print(list(distinct_H_W))
+timeee = time_taken # by boat
 
 # Part 2
-possible_L = list(distinct_H_W)
+all_coords = list(distinct_H_W)
+min_coord = min(all_coords)
+max_coord = max(all_coords)
+possible_L = range(min_coord, max_coord + 1)
 
 '''
 formula to get the time taken for H to W USING L as bridge
@@ -62,24 +62,23 @@ then calculate time from L to W:
 abs(L - W)
 
 then we add B for time taken to cross Bridge
-+ B
++ 1
 
 so:
 abs(H-L) + abs(L-W) + B is new time.
 '''
-time_taken_with_L = []
+tollerance_perL = []
 for L in possible_L:
-    time_taken = {}
+    time_value = []
     for index, value in enumerate(values):
         H = value[0]
         W = value[-1]
-        time = abs(H-L) + abs(L-W) + B
-        time_taken[index+1] = time
-    sorted_items = sorted(time_taken.items(), key=lambda item: item[1])
-    sorted_dict = dict(sorted_items)
-    time_taken_with_L.append(sorted_dict)
+        time = abs(H-L) + abs(L-W) + 1
+        time_value.append(time-timeee[index])
+    time_value.sort()
+    tollerance_perL.append(time_value)
 
-print(time_taken_with_L)
-all_threes = []
-for value in time_taken_with_L:
-    all
+
+T = 0
+T = min(tol[M-1] for tol in tollerance_perL)
+print(max(0,T))

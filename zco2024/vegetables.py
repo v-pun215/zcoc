@@ -7,81 +7,73 @@ for i in range(Q):
     X_j.append(int(input()))
 #-----------------------------
 '''
-Logic
-TEST CASE
-N=4 Q=2
-A_i = 2 4 5 3
-B_i = 5 2 3 3
-X_1 = 1
-X_2 = 2
+LOGIC
+func total()
 
-Total B Sum: 42
-
-CORRECT SOLUTION (FOR NOW)
-1. get sum of all A_i B_i pairs (here: [7, 6, 8, 6])
-2. iterate through N and check if sum of A_n and B_n = highest sum.
-3. if so, lucky_veggie = A_n, lucky_water = B_n (here: A_n = 5, B_n = 3)
-
-OPT 1
-1. subtract one from lucky_veggie (5)
-2. recalculate full B sum which is: 39
-
-OPT 2
-1. subtract one from lucky_water (3)
-2. recalculate full B sum which is: 37
-
-Get min of results of both options and return that, here 37
 
 
 '''
 
-def calculate(length, A_list, B_list): # calculates total B for any A and B list
-    sume = 0
-    for i in range(length):
-        sume+=A_list[i]*B_list[i]
-    return sume
+def total(A_list, B_list):
+    n = len(A_list)
+    output = 0
+    for i in range(n):
+        output+=A_list[i]*B_list[i]
+    return output
 
-def upgrade(length, A_list, B_list):
-    sum_pairs = []
-    for i in range(length):
-        sum_pairs.append(A_list[i]*B_list[i])
-    max_sum = max(sum_pairs)
-    for i in range(length):
-        if not A_list[i]*B_list[i] == max_sum:
-            continue
-        lucky_veggie = A_list[i]
-        lucky_water = B_list[i]
+def best_step(A_list, B_list):
+    n=len(A_list)
+    currn_total = total(A_list, B_list)
+    best_total = currn_total
+    best_i = -1
+    bestA = None
+    bestB = None
+    best_type = None
 
+    for i in range(n):
+        a = A_list[i]
+        b = B_list[i]
+        if a>0:
+            # option 1
+            newA = A_list.copy()
+            newA[i] = a-1
+            new_total = total(newA, B_list)
+            if new_total< best_total:
+                best_total = new_total
+                best_i = i
+                bestA = newA
+                bestB = B_list.copy()
+                best_type = 'A'
+        if b>0:
+            #option 2
+            newB = B_list.copy()
+            newB[i] = b-1
+            new_total = total(A_list, newB)
+            if new_total<best_total:
+                best_total = new_total
+                best_i = i
+                bestA = A_list.copy()
+                bestB = newB
+                best_type = 'B'
+        
+    if best_type is None:
+        return None
+    return best_total, bestA, bestB
 
-        # OPTION 1
-        temp_A_list = A_list.copy()
-        temp_A_list[i] = A_list[i]-1
-   
-        opt1_sum = calculate(length, temp_A_list, B_list)
+def go_through_steps(A_list,B_list, steps):
+    A = A_list.copy()
+    B = B_list.copy()
+    for step in range(steps):
+        inp = best_step(A,B)
+        if inp is None:
+            break
+        best_total = inp[0]
+        bestA = inp[1]
+        bestB = inp[2]
+        A, B = bestA, bestB
+    return total(A, B), A, B
 
-        # OPTION 2
-        temp_B_list = B_list.copy()
-        temp_B_list[i] = B_list[i]-1
-        opt2_sum = calculate(length, A_list, temp_B_list)
+for X in X_j:
+    final_total = go_through_steps(A_i, B_i, X)
 
-        min_list = min(opt1_sum, opt2_sum)
-        if min_list == opt1_sum:
-            return min_list, temp_A_list, B_list
-        else:
-            return min_list, A_list, temp_B_list
-A_i_temp = A_i.copy()
-B_i_temp = B_i.copy()
-for j in range(5):
-    answer = upgrade(N, A_i_temp, B_i_temp)
-    A_i_temp = answer[1]
-    B_i_temp = answer[2]
-print(answer[0]) if answer[0]>=0 else print(0)
-sys.exit()
-for X in X_j: 
-    A_i_temp = A_i.copy()
-    B_i_temp = B_i.copy()
-    for j in range(X):
-        answer = upgrade(N, A_i_temp, B_i_temp)
-        A_i_temp = answer[1]
-        B_i_temp = answer[2]
-    print(answer[0]) if answer[0]>=0 else print(0)
+    print(final_total[0]) if final_total[0]>=0 else print(0)

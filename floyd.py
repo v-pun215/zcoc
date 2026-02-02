@@ -38,7 +38,7 @@ def floyd_warshall(matrix, no_edge_value=0):
                     nxt[i][j] = nxt[i][k]
 
     return dist, nxt
-
+# adj matrix
 matrix = [
     [0,   5,   0,  10],   # 0 -> 1 (5), 0 -> 3 (10)
     [0,   0,   3,   0],   # 1 -> 2 (3)

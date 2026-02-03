@@ -20,4 +20,40 @@ def sliding_window(k, li):
 
     return results
 
-print(sliding_window(8, li))
+#print(sliding_window(8, li))
+import math
+INF = math.inf
+def sliding_2_plots(K, li):
+    n = len(li)
+    lbest = [INF for _ in range(n)]
+    rbest = [INF for _ in range(n)]
+
+    current_sum, start = 0, 0
+    for end in range(n):
+        current_sum += li[end]
+        while current_sum>K:
+            current_sum-=li[start]
+            start+=1
+        if current_sum == K:
+            length = end - start+ 1
+            rbest[start] = length
+            lbest[end] = length
+
+    RBEST = [INF for _ in range(n)]
+    LBEST = [INF for _ in range(n)]
+    current_min = INF
+    for i in range(n):
+        current_min = min(current_min, lbest[i])
+        LBEST[i] = current_min
+    current_min = INF
+    for i in reversed(range(n)):
+        current_min = min(current_min, rbest[i])
+        RBEST[i] = current_min
+    
+    global_min_combined = INF
+    for i in range(n-1):
+        if LBEST[i]!= INF and RBEST[i]!= INF:
+            global_min_combined = min(global_min_combined, LBEST[i] + RBEST[i])
+    return global_min_combined
+l = [5, 1, 1, 1, 2, 5, 2, 3]
+print(sliding_2_plots(5, l))

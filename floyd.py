@@ -32,7 +32,7 @@ def floyd_warshall(matrix, no_edge_value=0):
             for j in range(n):
                 if dist[k][j] == INF:
                     continue
-                nd = dist[i][k] + dist[k][j]
+                nd = dist[i][k] * dist[k][j]
                 if nd < dist[i][j]:
                     dist[i][j] = nd
                     nxt[i][j] = nxt[i][k]
@@ -45,5 +45,5 @@ matrix = [
     [0,   0,   0,   1],   # 2 -> 3 (1)
     [0,  -2,   0,   0],   # 3 -> 1 (-2)  (negative edge, but no negative cycle)
 ]
-
-print(floyd_warshall(matrix))
+mat = [[1, 0, 1, 1], [1, 1, 1, 1], [0, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 0]]
+print(floyd_warshall(mat))

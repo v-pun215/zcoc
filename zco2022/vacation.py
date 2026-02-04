@@ -1,3 +1,4 @@
+# 43 points!
 N, M = list(map(int, input().split())) # n = number of rows, m = no of columns
 
 matrix = []

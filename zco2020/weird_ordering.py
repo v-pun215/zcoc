@@ -11,7 +11,7 @@ def order(arr, i):
         return arr
     l = []
     r= []
-    n = len(arr)-1
+    n = len(arr)
     for j in range(n):
         if (arr[j]%power(2,i+1)) < power(2,i):
             l.append(arr[j])
@@ -21,12 +21,13 @@ def order(arr, i):
     r = order(r, i+1)
     c = concatenate(l,r)
     return c
-
+inputs = []
 for _ in range(T):
-    p, idx = map(int, input().split())
-    print("P and idx", p, idx)
+    inputs.append(list(map(int, input().split())))
+for i in inputs:
+    p, idx = i
     a = []
     for i in range(2**p):
         a.append(i)
     ans = order(a, 0)
-    print(ans)
+    print(ans[idx])

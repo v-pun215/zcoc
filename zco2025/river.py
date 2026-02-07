@@ -77,7 +77,7 @@ for L in possible_L:
         time_value.append(time-timeee[index])
     time_value.sort()
     tollerance_perL.append(time_value)
-
+    
 
 T = 0
 T = min(tol[M-1] for tol in tollerance_perL)

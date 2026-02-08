@@ -1,14 +1,14 @@
 # floyd warshall impl
 import math
 INF = math.inf
-
+# all pair shortest paths
 def floyd_warshall(matrix, no_edge_value=0):
     n = len(matrix)
-    dist = [[INF] * n for _ in range(n)]
-    nxt = [[None] * n for _ in range(n)]
+    dist = [[INF] * n for _ in range(n)] # initialise distances to maximum possible value (infinity & beyond!)
+    nxt = [[None] * n for _ in range(n)] # helps reconstruct paths later down the line
 
     for i in range(n):
-        for j in range (n):
+        for j in range(n):
             w = matrix[i][j] #weight from adj mrx
             if i == j:
                 dist[i][j] = 0.0
@@ -32,7 +32,7 @@ def floyd_warshall(matrix, no_edge_value=0):
             for j in range(n):
                 if dist[k][j] == INF:
                     continue
-                nd = dist[i][k] * dist[k][j]
+                nd = dist[i][k] + dist[k][j]
                 if nd < dist[i][j]:
                     dist[i][j] = nd
                     nxt[i][j] = nxt[i][k]
@@ -40,10 +40,9 @@ def floyd_warshall(matrix, no_edge_value=0):
     return dist, nxt
 # adj matrix
 matrix = [
-    [0,   5,   0,  10],   # 0 -> 1 (5), 0 -> 3 (10)
-    [0,   0,   3,   0],   # 1 -> 2 (3)
-    [0,   0,   0,   1],   # 2 -> 3 (1)
-    [0,  -2,   0,   0],   # 3 -> 1 (-2)  (negative edge, but no negative cycle)
+    [0, 1, 4],    # 0→1 (weight 1), 0→2 (weight 4)
+    [0, 0, 2],    # 1→2 (weight 2)
+    [0, 0, 0]     # no outgoing edges from 2
 ]
 mat = [[1, 0, 1, 1], [1, 1, 1, 1], [0, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 0]]
-print(floyd_warshall(mat))
+print(floyd_warshall(matrix))

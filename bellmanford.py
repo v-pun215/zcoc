@@ -1,12 +1,12 @@
 # Bellman-Ford implementation in Python!
 
-adjacency_list = {
+adjacency_list = { # vertex, weight
   0: [(1, 5),  (3, 10)],
   1: [(2, 3)],
   2: [(3, 1)],
   3: [(1, -2)]
 }
-
+# single source shortest paths
 import math
 INF = math.inf
 def bellman_ford(root, adj):
@@ -17,6 +17,7 @@ def bellman_ford(root, adj):
     dist[root] = 0.0
 
     for i in range(n-1):
+        changed = False
         for u in range(n):
             if dist[u] == INF:
                 continue

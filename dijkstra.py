@@ -38,12 +38,12 @@ def dijkstra(v,adj):
         print("we're at", u, "(dist =", d_u, ")")
         
         for item in adj.get(u, []):
-            vertex, w = item
+            vertex, w = item # neighbour
             if vertex in marked:
                 continue
             w_val = float(w)
             nd = d_u + w_val
-            if nd < dist.get(vertex, INF):
+            if nd < dist.get(vertex, INF): # route is shorter
                 dist[vertex] = nd
                 parent[vertex] = u
                 que.put([nd, vertex])
